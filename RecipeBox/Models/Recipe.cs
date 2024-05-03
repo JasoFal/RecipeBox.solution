@@ -12,7 +12,7 @@ namespace RecipeBox.Models
     public string Ingredients { get; set; }
     [Required(ErrorMessage = "The recipe instructions can't be empty.")]
     public string RecipeInstructions  { get; set; }
-    public List<ItemTag> JoinEntities { get; }
+    public List<RecipeTag> JoinEntities { get; }
     public ApplicationUser User { get; set; }
   }
 }
