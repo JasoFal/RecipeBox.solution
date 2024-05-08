@@ -20,5 +20,14 @@ namespace RecipeBox.Controllers
     {
       return View(_db.Tags.ToList());
     }
+
+    public ActionResult Details(int id)
+    {
+      Tag thisTag = _db.Tags
+        .Include(t => t.JoinEntities)
+        .ThenInclude(j => j.Recipe)
+        .FirstOrDefault(t => t.TagId == id);
+      return View(thisTag);
+    }
   }
 }
