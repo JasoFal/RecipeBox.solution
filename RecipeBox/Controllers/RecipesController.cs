@@ -55,5 +55,14 @@ namespace RecipeBox.Controllers
         return RedirectToAction("Index");
       }
     }
+
+    public ActionResult Details(int id)
+    {
+      Recipe thisRecipe = _db.Recipes
+        .Include(r => r.JoinEntities)
+        .ThenInclude(j => j.Tag)
+        .FirstOrDefault(r => r.RecipeId == id);
+      return View(thisRecipe);
+    }
   }
 }
