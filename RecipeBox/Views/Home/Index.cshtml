@@ -9,7 +9,7 @@
 <hr>
 
 <h4>Tags</h4>
-@if (Models["tags"].Length == 0)
+@if (Model["tags"].Length == 0)
 {
   <p>No tags have been added yet.</p>
 }
@@ -23,7 +23,7 @@
 @if (User.Identity.IsAuthenticated)
 {
   <h4>Recipes for @User.Identity.Name</h4>
-  @if (Model["recipe"].Length == 0)
+  @if (Model["recipes"].Length == 0)
   {
     <p>No recipes have been added yet!</p>
   }
@@ -33,11 +33,11 @@
       <li>@Html.ActionLink(@recipe.RecipeName, "Details", "Recipes", new { id = @recipe.RecipeId })</li>
     }
   </ul>
-  else
-  {
-    <h4>Recipes</h4>
-    <p>Please @Html.ActionLink("log in", "LogIn", "Account" new { id = @item.RecipeId })</p>
-  }
+}
+else
+{
+  <h4>Recipes</h4>
+  <p>Please @Html.ActionLink("log in", "LogIn", "Account") to view or manage your recipes.</p>
 }
 
 <p>@Html.ActionLink("Manage recipes", "Index", "Recipes")</p>
