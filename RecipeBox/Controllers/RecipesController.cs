@@ -64,5 +64,19 @@ namespace RecipeBox.Controllers
         .FirstOrDefault(r => r.RecipeId == id);
       return View(thisRecipe);
     }
+
+    public ActionResult Edit(int id)
+    {
+      Recipe thisRecipe = _db.Recipes.FirstOrDefault(r => r.RecipeId == id);
+      return View(thisRecipe);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Recipe recipe)
+    {
+      _db.Recipes.Update(recipe);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
