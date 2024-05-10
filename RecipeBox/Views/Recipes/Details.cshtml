@@ -7,6 +7,15 @@
 
 <h2>@Html.DisplayFor(model => model.RecipeName)</h2>
 
+@if(@Model.RecipeRating != 0)
+{
+  <p>Recipe Rating: @Html.DisplayFor(model => model.RecipeRating)</p>
+}
+else
+{
+  <p>Recipe has not been rated yet.</p>
+}
+
 @if(@Model.JoinEntities.Count == 0)
 {
   <p>This recipe does not have any category tags yet.</p>
@@ -35,3 +44,8 @@ else
 <h4>Instructions</h4>
 <p>@Html.DisplayFor(model => model.RecipeInstructions)</p>
 
+<p>@Html.ActionLink("Rate recipe", "RateRecipe", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Add a category tag", "AddTag", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Edit Recipe", "Edit", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Delete Recipe", "Delete", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>
