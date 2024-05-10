@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+  int id = ViewBag.RecipeId;
+}
+
+@using RecipeBox.ViewModels
+@model RecipeRatingViewModel
+
+<h2>Rate Recipe</h2>
+
+<h4>Rate this recipe:</h4>
+
+@if (!ViewData.ModelState.IsValid)
+{
+  @Html.ValidationSummary("Please enter a rating between 1 and 10.")
+}
+
+@using (Html.BeginForm("RateRecipe", "Recipes", FormMethod.Post))
+{
+  <input type="hidden" value="@id" name="id">
+
+  @Html.LabelFor(model => model.RecipeRating)
+  @Html.EditorFor(model => model.RecipeRating)
+
+  <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>
