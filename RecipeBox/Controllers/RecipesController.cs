@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using RecipeBox.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using RecipeBox.ViewModels;
 
 namespace RecipeBox.Controllers
 {
@@ -129,6 +131,30 @@ namespace RecipeBox.Controllers
       _db.RecipeTags.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    public ActionResult RateRecipe(int id)
+    {
+      ViewBag.RecipeId = _db.Recipes.FirstOrDefault(r => r.RecipeId == id).RecipeId;
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult RateRecipe(RecipeRatingViewModel model, int id)
+    {
+      if (!ModelState.IsValid)
+      {
+        ViewBag.RecipeId = _db.Recipes.FirstOrDefault(r => r.RecipeId == id).RecipeId;
+        return View();
+      }
+      else
+      {
+        Recipe thisRecipe = _db.Recipes.FirstOrDefault(r => r.RecipeId == id);
+        thisRecipe.RecipeRating = model.RecipeRating;
+        _db.Recipes.Update(thisRecipe);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
   }
 }
