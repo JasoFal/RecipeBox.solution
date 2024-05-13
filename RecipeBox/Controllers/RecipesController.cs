@@ -31,6 +31,7 @@ namespace RecipeBox.Controllers
       ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
       List<Recipe> userRecipes = _db.Recipes
         .Where(e => e.User.Id == currentUser.Id)
+        .OrderByDescending(recipe => recipe.RecipeRating)
         .ToList();
       return View(userRecipes);
     }
