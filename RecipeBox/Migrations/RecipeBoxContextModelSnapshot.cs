@@ -221,7 +221,7 @@ namespace RecipeBox.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("RecipeId")
+                    b.Property<int?>("RecipeId")
                         .HasColumnType("int");
 
                     b.HasKey("IngredientId");
@@ -368,13 +368,9 @@ namespace RecipeBox.Migrations
 
             modelBuilder.Entity("RecipeBox.Models.Ingredient", b =>
                 {
-                    b.HasOne("RecipeBox.Models.Recipe", "Recipe")
+                    b.HasOne("RecipeBox.Models.Recipe", null)
                         .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipe");
+                        .HasForeignKey("RecipeId");
                 });
 
             modelBuilder.Entity("RecipeBox.Models.Recipe", b =>
@@ -395,7 +391,7 @@ namespace RecipeBox.Migrations
                         .IsRequired();
 
                     b.HasOne("RecipeBox.Models.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("IJoinEntities")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -426,6 +422,8 @@ namespace RecipeBox.Migrations
 
             modelBuilder.Entity("RecipeBox.Models.Recipe", b =>
                 {
+                    b.Navigation("IJoinEntities");
+
                     b.Navigation("Ingredients");
 
                     b.Navigation("JoinEntities");
