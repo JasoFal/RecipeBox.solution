@@ -21,6 +21,13 @@ namespace RecipeBox.Controllers
       return View(_db.Ingredients.ToList());
     }
 
-    
+    public ActionResult Details(int id)
+    {
+      Ingredient thisIngredient = _db.Ingredients
+        .Include(ing => ing.IJoinEntities)
+        .ThenInclude(join => join.Recipe)
+        .FirstOrDefault(ing => ing.IngredientId == id);
+      return View(thisIngredient);
+    }
   }
 }
