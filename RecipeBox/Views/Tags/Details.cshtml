@@ -19,7 +19,7 @@ else
   <ul>
   @foreach(RecipeTag join in Model.JoinEntities)
   {
-    <li>@Html.ActionLink($"{@join.Recipe.RecipeName}", "Details", new { id = @join.Recipe.RecipeId })</li>
+    <li>@Html.ActionLink($"{@join.Recipe.RecipeName}", "Details", "Recipes", new { id = @join.Recipe.RecipeId })</li>
     @using (Html.BeginForm("DeleteJoin", "Tags"))
     {
       @Html.Hidden("joinId", @join.RecipeTagId)
