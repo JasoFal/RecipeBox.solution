@@ -15,13 +15,13 @@
 {
   @Html.LabelFor(model => model.RecipeName)
   @Html.TextBoxFor(model => model.RecipeName)
-
-  @Html.LabelFor(model => model.Ingredients)
-  @Html.TextBoxFor(model => model.Ingredients)
-
+  <br />
+  
   @Html.LabelFor(model => model.RecipeInstructions)
   @Html.TextBoxFor(model => model.RecipeInstructions)
+  <br />
 
   <input type="submit" value="Add new recipe" class="btn btn-default" />
 }
+
 <p>@Html.ActionLink("Show all recipes", "Index")</p>
