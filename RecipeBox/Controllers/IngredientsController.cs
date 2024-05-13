@@ -29,5 +29,25 @@ namespace RecipeBox.Controllers
         .FirstOrDefault(ing => ing.IngredientId == id);
       return View(thisIngredient);
     }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Ingredient ingredient)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View(ingredient);
+      }
+      else
+      {
+        _db.Ingredients.Add(ingredient);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+    }
   }
 }
