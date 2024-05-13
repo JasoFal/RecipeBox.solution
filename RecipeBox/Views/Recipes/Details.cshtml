@@ -37,9 +37,25 @@ else
 }
 
 <h4>Ingredients:</h4>
-<ul>
-  <li>@Html.DisplayFor(model => model.Ingredients)</li>
-</ul>
+<p>@Html.ActionLink("Add ingredients", "AddIngredient", new { id = Model.RecipeId })</p>
+@if (@Model.IJoinEntities.Count == 0)
+{
+  <p>This recipe does not have any ingredients added yet.</p>
+}
+else
+{
+  <ul>
+    @foreach(RecipeIngredient join in Model.IJoinEntities)
+    {
+      <li>@join.Ingredient.IngredientName</li>
+      @using (Html.BeginForm("IDeleteJoin", "Recipes"))
+      {
+        @Html.Hidden("joinId", @join.RecipeIngredientId)
+        <input type="submit" value="Remove ingredient from recipe" />
+      }
+    }
+  </ul>
+}
 
 <h4>Instructions</h4>
 <p>@Html.DisplayFor(model => model.RecipeInstructions)</p>
