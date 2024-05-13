@@ -91,5 +91,20 @@ namespace RecipeBox.Controllers
         return RedirectToAction("Index");
       }
     }
+
+    public ActionResult Delete(int id)
+    {
+      Ingredient thisIngredient = _db.Ingredients.FirstOrDefault(ing => ing.IngredientId == id);
+      return View(thisIngredient);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Ingredient thisIngredient = _db.Ingredients.FirstOrDefault(ing => ing.IngredientId == id);
+      _db.Ingredients.Remove(thisIngredient);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
