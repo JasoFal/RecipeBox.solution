@@ -62,6 +62,8 @@ namespace RecipeBox.Controllers
     public ActionResult Details(int id)
     {
       Recipe thisRecipe = _db.Recipes
+        .Include(rec => rec.IJoinEntities)
+        .ThenInclude(join => join.Ingredient)
         .Include(r => r.JoinEntities)
         .ThenInclude(j => j.Tag)
         .FirstOrDefault(r => r.RecipeId == id);
