@@ -385,7 +385,7 @@ namespace RecipeBox.Migrations
             modelBuilder.Entity("RecipeBox.Models.RecipeIngredient", b =>
                 {
                     b.HasOne("RecipeBox.Models.Ingredient", "Ingredient")
-                        .WithMany()
+                        .WithMany("IJoinEntities")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -418,6 +418,11 @@ namespace RecipeBox.Migrations
                     b.Navigation("Recipe");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("RecipeBox.Models.Ingredient", b =>
+                {
+                    b.Navigation("IJoinEntities");
                 });
 
             modelBuilder.Entity("RecipeBox.Models.Recipe", b =>

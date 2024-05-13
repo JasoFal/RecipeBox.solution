@@ -235,24 +235,23 @@ namespace RecipeBox.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Ingredient",
+                name: "Ingredients",
                 columns: table => new
                 {
                     IngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IngredientName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    RecipeId = table.Column<int>(type: "int", nullable: false)
+                    RecipeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.IngredientId);
+                    table.PrimaryKey("PK_Ingredients", x => x.IngredientId);
                     table.ForeignKey(
-                        name: "FK_Ingredient_Recipes_RecipeId",
+                        name: "FK_Ingredients_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
-                        principalColumn: "RecipeId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RecipeId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -279,6 +278,33 @@ namespace RecipeBox.Migrations
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "TagId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "RecipeIngredients",
+                columns: table => new
+                {
+                    RecipeIngredientId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RecipeId = table.Column<int>(type: "int", nullable: false),
+                    IngredientId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipeIngredients", x => x.RecipeIngredientId);
+                    table.ForeignKey(
+                        name: "FK_RecipeIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredients",
+                        principalColumn: "IngredientId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeIngredients_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "RecipeId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -321,8 +347,18 @@ namespace RecipeBox.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredient_RecipeId",
-                table: "Ingredient",
+                name: "IX_Ingredients_RecipeId",
+                table: "Ingredients",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeIngredients_IngredientId",
+                table: "RecipeIngredients",
+                column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeIngredients_RecipeId",
+                table: "RecipeIngredients",
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
@@ -359,7 +395,7 @@ namespace RecipeBox.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Ingredient");
+                name: "RecipeIngredients");
 
             migrationBuilder.DropTable(
                 name: "RecipeTags");
@@ -368,10 +404,13 @@ namespace RecipeBox.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Recipes");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Recipes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
