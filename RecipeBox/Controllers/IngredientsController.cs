@@ -106,5 +106,14 @@ namespace RecipeBox.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      RecipeIngredient joinEntry = _db.RecipeIngredients.FirstOrDefault(join => join.RecipeIngredientId == joinId);
+      _db.RecipeIngredients.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
