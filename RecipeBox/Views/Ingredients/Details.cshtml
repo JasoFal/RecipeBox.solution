@@ -1,0 +1,30 @@
+@{
+  Layout = "_Layout";
+}
+
+@using RecipeBox.Models
+@model RecipeBox.Models.Ingredient
+
+<h3>Display all recipes that use @Html.DisplayFor(model => model.IngredientName)</h3>
+
+@if (@Model.IJoinEntities.Count == 0)
+{
+  <p>No recipes use this ingredient.</p>
+}
+else
+{
+  @foreach(RecipeIngredient join in Model.IJoinEntities)
+  {
+    <li>@Html.ActionLink($"{@join.Recipe.RecipeName}", "Details", new { id = @join.Recipe.RecipeId })</li>
+    @using (Html.BeginForm())
+    {
+      @Html.Hidden("joinId", @join.RecipeIngredientId)
+      <input type="submit" value="Remove ingredient from recipe">
+    }
+  }
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>
+<p>@Html.ActionLink("Add a recipe", "AddRecipe", new { id = Model.IngredientId })</p>
+<p>@Html.ActionLink("Edit Ingredient", "Edit", new { id = Model.IngredientId })</p>
+<p>@Html.ActionLink("Delete Ingredient", "Delete", new { id = Model.IngredientId })</p>
