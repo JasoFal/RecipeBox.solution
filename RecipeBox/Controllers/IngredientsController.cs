@@ -70,5 +70,26 @@ namespace RecipeBox.Controllers
       }
       return RedirectToAction("Details", new { id = ingredient.IngredientId });
     }
+
+    public ActionResult Edit(int id)
+    {
+      Ingredient thisIngredient = _db.Ingredients.FirstOrDefault(ing => ing.IngredientId == id);
+      return View(thisIngredient);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Ingredient ingredient)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View(ingredient);
+      }
+      else
+      {
+        _db.Ingredients.Update(ingredient);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+    }
   }
 }
